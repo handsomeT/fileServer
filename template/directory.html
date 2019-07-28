@@ -32,6 +32,12 @@
     <div class="content">
         <div class="header">
             Hello
+            <div style="float: right">
+                <form action="http://{{.uploadUrl}}" enctype="multipart/form-data" method="post">
+                    <input type="file" name="file" />
+                    <input type="submit" value="上传" />
+                </form>
+            </div>
         </div>
         <div class="body">
             {{range .list}}
