@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style type="text/css">
+    .content {
+        margin: 10vh 0 0 30%;
+        height: 70vh;
+        width: 40%;
+    }
+    .header {
+        height: 5vh;
+        width: 100%;
+        border-bottom: 2px solid gray;
+        font-size: 3vh;
+    }
+    .body {
+        margin: 3vh 0 0 0;
+        padding: 10px 5px;
+        height: 60vh;
+        width: 100%;
+        overflow-y: auto;
+        font-size: 2.2vh;
+    }
+    .download {
+        float: right;
+    }
+</style>
+<body>
+    <div class="content">
+        <div class="header">
+            Hello
+        </div>
+        <div class="body">
+            {{range .list}}
+                <div class="li">
+                    <li>
+                        <a href="http://{{.Href}}">{{.Name}}</a>
+                        {{if .DownloadUrl}}
+                            <a class="download" href="http://{{.DownloadUrl}}" target="_blank">下载</a>
+                        {{end}}
+                    </li>
+                </div>
+            {{end}}
+        </div>
+    </div>
+</body>
+</html>
