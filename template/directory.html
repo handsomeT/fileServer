@@ -10,12 +10,14 @@
         height: 70vh;
         width: 40%;
     }
+
     .header {
         height: 5vh;
         width: 100%;
         border-bottom: 2px solid gray;
         font-size: 3vh;
     }
+
     .body {
         margin: 3vh 0 0 0;
         padding: 10px 5px;
@@ -24,33 +26,36 @@
         overflow-y: auto;
         font-size: 2.2vh;
     }
+
     .download {
         float: right;
     }
 </style>
 <body>
-    <div class="content">
-        <div class="header">
-            Hello
-            <div style="float: right">
-                <form action="http://{{.uploadUrl}}" enctype="multipart/form-data" method="post">
-                    <input type="file" name="file" />
-                    <input type="submit" value="上传" />
-                </form>
-            </div>
-        </div>
-        <div class="body">
-            {{range .list}}
-                <div class="li">
-                    <li>
-                        <a href="http://{{.Href}}">{{.Name}}</a>
-                        {{if .DownloadUrl}}
-                            <a class="download" href="http://{{.DownloadUrl}}" target="_blank">下载</a>
-                        {{end}}
-                    </li>
-                </div>
-            {{end}}
+<div class="content">
+    <div class="header">
+        Hello
+        <div style="float: right">
+            <form action="http://{{.uploadUrl}}" enctype="multipart/form-data" method="post">
+                <input type="file" name="file"/>
+                <input type="submit" value="上传"/>
+            </form>
         </div>
     </div>
+    <div class="body">
+    {{range .list}}
+        <div class="li">
+            <li>
+                <a href="http://{{.Href}}">{{.Name}}</a>
+            {{if .IsFile}}
+                <a class="download" href="http://{{.Href}}" download="{{.Name}}">
+                    下载
+                </a>
+            {{end}}
+            </li>
+        </div>
+    {{end}}
+    </div>
+</div>
 </body>
 </html>

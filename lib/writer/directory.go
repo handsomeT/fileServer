@@ -1,18 +1,16 @@
 package writer
 
 import (
-	"fileServer/cfg"
 	"fileServer/lib/log"
 	"html/template"
 	"net/http"
 	"os"
-	"strings"
 )
 
 type Item struct {
-	Href        string
-	Name        string
-	DownloadUrl string
+	Href   string
+	Name   string
+	IsFile bool
 }
 
 // 渲染目录
@@ -24,12 +22,9 @@ func Directory(w http.ResponseWriter, host string, dir string, infoList []os.Fil
 			continue
 		}
 		item := Item{
-			Href:        url(host, cfg.UrlFile, dir+"/"+info.Name()),
-			Name:        info.Name(),
-			DownloadUrl: "",
-		}
-		if !info.IsDir() {
-			item.DownloadUrl = url(host, cfg.UrlDownload, dir+"/"+info.Name())
+			Href:   host + dir + "/" + info.Name(),
+			Name:   info.Name(),
+			IsFile: !info.IsDir(),
 		}
 		list = append(list, item)
 	}
@@ -38,7 +33,7 @@ func Directory(w http.ResponseWriter, host string, dir string, infoList []os.Fil
 	data := make(map[string]interface{})
 	data["list"] = list
 	// 添加上传url
-	data["uploadUrl"] = url(host, cfg.UrlUpload, dir)
+	data["uploadUrl"] = host + dir
 	err := t.Execute(w, data)
 	if err != nil {
 		log.Error(err)
@@ -53,10 +48,4 @@ func isHiddenFile(info os.FileInfo) bool {
 		return false
 	}
 	return name[0] == '.'
-}
-
-// 获取链接, 用于跳转
-func url(host string, prefix string, path string) string {
-	ret := host + prefix + "/" + path
-	return strings.Replace(ret, "//", "/", -1)
 }
