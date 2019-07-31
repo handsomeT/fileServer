@@ -1,10 +1,13 @@
 package writer
 
 import (
+	"fileServer/cfg"
 	"fileServer/lib/log"
+	"fileServer/lib/util"
 	"html/template"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type Item struct {
@@ -33,7 +36,13 @@ func Directory(w http.ResponseWriter, host string, dir string, infoList []os.Fil
 	data := make(map[string]interface{})
 	data["list"] = list
 	// 添加上传url
-	data["uploadUrl"] = host + dir
+	data["uploadUrl"] = url(host + cfg.UrlUpload + "/" + dir)
+	// 添加当前时间
+	data["time"] = util.Time()
+	// 添加设定时间url
+	data["timeSetUrl"] = url(host + cfg.UrlTimeSet)
+	// 添加还原时间url
+	data["timeRecUrl"] = url(host + cfg.UrlTimeRec)
 	err := t.Execute(w, data)
 	if err != nil {
 		log.Error(err)
@@ -48,4 +57,9 @@ func isHiddenFile(info os.FileInfo) bool {
 		return false
 	}
 	return name[0] == '.'
+}
+
+// 获取链接, 用于跳转
+func url(url string) string {
+	return strings.Replace(url, "//", "/", -1)
 }

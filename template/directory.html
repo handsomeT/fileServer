@@ -6,12 +6,25 @@
 </head>
 <style type="text/css">
     .content {
-        margin: 10vh 0 0 30%;
+        margin: 0 0 0 30%;
         height: 70vh;
         width: 40%;
+        float: left;
+    }
+
+    .time {
+        margin-top: 5vh;
+        height: 5vh;
+        width: 100%;
+    }
+
+    .time form {
+        float: right;
+        margin-left: 30px;
     }
 
     .header {
+        margin-top: 5vh;
         height: 5vh;
         width: 100%;
         border-bottom: 2px solid gray;
@@ -33,6 +46,16 @@
 </style>
 <body>
 <div class="content">
+    <div class="time">
+        <div style="float: left">当前时间: {{.time}}</div>
+        <form action="http://{{.timeRecUrl}}" enctype="multipart/form-data" method="post">
+            <input type="submit" value="还原时间"/>
+        </form>
+        <form action="http://{{.timeSetUrl}}" enctype="multipart/form-data" method="post">
+            时间: <input type="text" name="time"/>
+            <input type="submit" value="设定时间"/>
+        </form>
+    </div>
     <div class="header">
         Hello
         <div style="float: right">

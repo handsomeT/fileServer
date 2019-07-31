@@ -2,6 +2,7 @@ package httpServer
 
 import (
 	"fileServer/cfg"
+	"fileServer/lib/log"
 	"fileServer/lib/writer"
 	"net/http"
 	"strings"
@@ -56,6 +57,7 @@ func GetHandler(dir string) (handler func(http.ResponseWriter, *http.Request)) {
 				return
 			}
 			time := r.FormValue("time")
+			log.Debug(time)
 			if len(time) == 0 {
 				writer.BadRequest(w)
 				return
