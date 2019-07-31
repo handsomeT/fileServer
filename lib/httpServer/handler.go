@@ -55,5 +55,8 @@ func GetHandler(dir string) (handler func(http.ResponseWriter, *http.Request)) {
 			}
 			w.Write(data)
 		}
+		if flag, _ := removePrefix(path, cfg.UrlTimeGet); flag {
+			timeSetHandler("", w)
+		}
 	}
 }
