@@ -8,7 +8,7 @@
     .content {
         margin: 0 0 0 30%;
         height: 70vh;
-        width: 40%;
+        width: 50%;
         float: left;
     }
 
@@ -47,7 +47,7 @@
 <body>
 <div class="content">
     <div class="time">
-        <div style="float: left">当前时间: {{.time}}</div>
+        <div style="float: left">{{.time}}</div>
         <form action="http://{{.timeRecUrl}}" enctype="multipart/form-data" method="post">
             <input type="submit" value="还原时间"/>
         </form>
