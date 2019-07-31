@@ -3,7 +3,7 @@ package httpServer
 import (
 	"bytes"
 	"fileServer/lib/log"
-	"fileserver/lib/writer"
+	"fileServer/lib/writer"
 	"net/http"
 	"os/exec"
 )
