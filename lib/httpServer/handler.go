@@ -45,18 +45,27 @@ func GetHandler(dir string) (handler func(http.ResponseWriter, *http.Request)) {
 			uploadHandler(dir, path, f, fHeader, w)
 			return
 		}
-		// 如果是获取时间
+		// 时间相关处理
 		if flag, _ := removePrefix(path, cfg.UrlTimeGet); flag {
-			// 获取时间
-			data, err := getTime()
-			if err != nil {
-				writer.InternalServerError(w)
+			timeGetHandler(w)
+			return
+		}
+		if flag, _ := removePrefix(path, cfg.UrlTimeSet); flag {
+			if err := r.ParseMultipartForm(cfg.MaxUploadSize); err != nil {
+				writer.BadRequest(w)
 				return
 			}
-			w.Write(data)
-		}
-		if flag, _ := removePrefix(path, cfg.UrlTimeGet); flag {
+			time := r.FormValue("time")
+			if len(time) == 0 {
+				writer.BadRequest(w)
+				return
+			}
 			timeSetHandler("", w)
+			return
+		}
+		if flag, _ := removePrefix(path, cfg.UrlTimeRec); flag {
+			timeRecHandler(w)
+			return
 		}
 	}
 }
