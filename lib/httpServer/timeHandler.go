@@ -2,7 +2,7 @@ package httpServer
 
 import (
 	"bytes"
-	"fileserver/lib/log"
+	"fileServer/lib/log"
 	"os/exec"
 )
 

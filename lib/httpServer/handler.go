@@ -1,8 +1,8 @@
 package httpServer
 
 import (
+	"fileServer/cfg"
 	"fileServer/lib/writer"
-	"fileserver/cfg"
 	"net/http"
 	"strings"
 )
